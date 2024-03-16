@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <title>----</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+    <!-- Header div - static with minor adjustments logged in / not -->
+    <div class="container_header">
+        <h1>Expense Management</h1>
+        <button class="btn btnLogout">Logout</button>
+    </div>
+
+    <!-- //Container for log in page -->
+    <div class="container_login container-main">
+        <label class="lbl lblLogin">Username</label>
+        <input type="text" placeholder="Username">
+        <label class="lbl lblLogin">Password</label>
+        <input type="password" placeholder="********">
+        <button class="btn btnLogin">Login</button>
+        <label id="label-message">*blank*</label>
+    </div>
+
+    <!-- //Main functional screen page -->
+    <div class="container_home container-main">
+
+        <!-- //Options page, right after logging in -->
+        <div class="homeOptions hidden">
+            <button class="btn btnOptions" id="btnAddTransactionOption">Add a transaction</button>
+            <button class="btn btnOptions">View transactions</button>
+            <button class="btn btnOptions">Budget for next month</button>
+            <button class="btn btnOptions">Allocate transactions</button>
+        </div>
+
+
+        <!-- //Add transactions block -->
+        <div class="optionAddTransaction hidden">
+            <h3 class="lbl lblMainHeading">ADD A TRANSACTION</h3>
+
+            <div class="addTransOptions hidden">
+
+                <label>Is this transaction SPLIT or a PERSONAL expense?</label>
+                <div class="buttons">
+                    <button class="btn btnAddTransOptions">Split</button>
+                    <button class="btn btnAddTransOptions">Personal</button>
+                </div>
+                <button class="btn btnBack">BACK</button>
+            </div>
+
+            <div class="addTransInfo hidden">
+
+                <label class="lbl">Name</label>
+                <input type="text" id="transName">
+                <label class="lbl">Amount</label>
+                <input type="number" id="transAmount">
+                <label class=" lbl">Account</label>
+                <select id="transAccount"></select>
+                <button class="btn btnAddTransaction">Add Transaction</button>
+                <button class="btn btnBack">BACK</button>
+
+            </div>
+
+            <div class="addTransComplete hidden">
+                <label class="lbl">Your transaction has been logged!</label>
+                <button class="btn btnBackHome">Home</button>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
