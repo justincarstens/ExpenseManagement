@@ -16,8 +16,6 @@ buttonLogout.addEventListener('click', async function () {
 */
 
 
-
-
 //login screen
 const buttonLogin = document.querySelector('.btnLogin');
 const buttonLogout = document.querySelector('.btnLogout');
@@ -30,6 +28,7 @@ const buttonBackHome = document.querySelector('.btnBackHome');
 
 //view transaction screen
 const buttonViewTransactions = document.querySelector('#btnViewTransactionsOption');
+const buttonBackHomeViewTrans = document.querySelector('#btnBackViewTrans');
 
 // FUNCTION DECLARATION
 
@@ -113,7 +112,6 @@ buttonAddTransaction.addEventListener('click', async function () {
         document.querySelector('#transAmount').value = '';
         const account = document.querySelector('#transAccount').value;
         const transAccountElement = document.querySelector('#transAccount');
-
         while (transAccountElement.firstChild) {
             transAccountElement.removeChild(transAccountElement.firstChild);
         }
@@ -195,4 +193,14 @@ buttonViewTransactions.addEventListener('click', async function () {
     });
 
     swapWindows('.homeOptions', '.optionViewTransactions');
+});
+
+buttonBackHomeViewTrans.addEventListener('click', function () {
+    swapWindows('.optionViewTransactions', '.homeOptions');
+
+    const transContainer = document.querySelector('.viewTransactions');
+
+    while (transContainer.firstChild) {
+        transContainer.removeChild(transContainer.firstChild);
+    }
 });
