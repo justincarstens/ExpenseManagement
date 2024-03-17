@@ -13,8 +13,9 @@ buttonLogout.addEventListener('click', async function () {
         console.error('Error:', error);
     }
 });
-
 */
+
+
 
 
 //login screen
@@ -41,7 +42,7 @@ const swapWindows = function (startingWindow, newWindow) {
 };
 
 // GET function - 1 parameter - URL endpoint (collection name)
-const allDocuments = async function (collectionName) {
+const getCollection = async function (collectionName) {
     try {
         const apiCall = await fetch(`http://localhost:3000/${collectionName}`);
         if (!apiCall.ok) {
@@ -52,8 +53,7 @@ const allDocuments = async function (collectionName) {
     } catch (error) {
         console.error('Error', error);
     }
-};
-// to use above function - must call from async function
+}; // to use above function - must call from async function
 
 
 
@@ -74,11 +74,10 @@ buttonLogout.addEventListener('click', async function () {
 
 // ADD TRANSACTION button redirect - including moving through the whole process
 buttonAddTransaction.addEventListener('click', async function () {
-
     let budgetAccountsArray = null;
 
     try {
-        budgetAccountsArray = await allDocuments('budgetAccounts');
+        budgetAccountsArray = await getCollection('budgetAccounts');
         console.log(budgetAccountsArray);
     } catch (error) {
         console.error(error);
@@ -93,6 +92,7 @@ buttonAddTransaction.addEventListener('click', async function () {
 
     swapWindows('.homeOptions', '.optionAddTransaction');
     document.querySelector('.addTransOptions').classList.remove('hidden');
+
     let splitOrPersonal = '';
     buttonSplitOrPersonal.forEach(button => {
         button.addEventListener('click', function () {
@@ -104,10 +104,12 @@ buttonAddTransaction.addEventListener('click', async function () {
 
     btnAddTransaction.addEventListener('click', async function () {
 
+        //Getting data from input & dropdown boxes
         const name = document.querySelector('#transName').value;
         const amount = document.querySelector('#transAmount').value;
         const account = document.querySelector('#transAccount').value;
 
+        //Creating object to send through API        
         const transactionData = {
             name: name,
             account: account,
@@ -117,6 +119,7 @@ buttonAddTransaction.addEventListener('click', async function () {
             preplannedExpense: Boolean('true')
         };
 
+        //POST request to /transactions
         try {
             const apiCall = await fetch('http://localhost:3000/transactions', {
                 method: 'POST',

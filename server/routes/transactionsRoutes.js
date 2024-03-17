@@ -26,7 +26,7 @@ transactionsRouter.post("/", async (req, res) => {
         res.send(result).status(204);
     } catch (err) {
         console.error(err);
-        res.status(500).send("Error adding record - FAILED ON ROUTE");
+        res.status(500).send("Error adding record - FAILED ON ROUTER");
     }
 });
 
