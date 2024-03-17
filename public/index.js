@@ -1,38 +1,74 @@
 'use strict'
-/* 
-buttonLogout.addEventListener('click', async function () {
-    try {
-        const apiCall = await fetch('http://localhost:3000/accounts');
-        if (!apiCall.ok) {
-            throw new Error('Failed to fetch data');
-        }
-        const data = await apiCall.json();
-        // Process the response data
-        console.log(data);
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-*/
-
 
 //login screen
+const containerLogin = document.querySelector('.container_login');
+const inputLogin = document.querySelectorAll('.container_login input');
 const buttonLogin = document.querySelector('.btnLogin');
 const buttonLogout = document.querySelector('.btnLogout');
-
+//Options screen
+const containerOptions = document.querySelector('.homeOptions');
+const optionsAddTransBtn = document.querySelector('#btnAddTransactionOption');
+const optionsViewTransBtn = document.querySelector('#btnViewTransactionsOption');
+//Globalish
+const buttonBack = document.querySelectorAll('.btnBack');
 //add transaction screen
-const buttonAddTransaction = document.querySelector('#btnAddTransactionOption');
-const btnAddTransaction = document.querySelector('.btnAddTransaction');
+const containerAddTransaction = document.querySelector('.optionAddTransaction');
+const containerAddTransOptions = document.querySelector('.addTransOptions');
 const buttonSplitOrPersonal = document.querySelectorAll('.btnAddTransOptions');
-const buttonBackHome = document.querySelector('.btnBackHome');
-
+const containerAddTransInfo = document.querySelector('.addTransInfo');
+const addTransInputName = document.querySelector('#transName');
+const addTransInputAmount = document.querySelector('#transAmount');
+const addTransInputAccount = document.querySelector('#transAccount');
+const btnAddTransaction = document.querySelector('.btnAddTransaction');
+const containerAddTransComplete = document.querySelector('.addTransComplete');
 //view transaction screen
-const buttonViewTransactions = document.querySelector('#btnViewTransactionsOption');
-const buttonBackHomeViewTrans = document.querySelector('#btnBackViewTrans');
+const containerViewTransOutline = document.querySelector('.optionViewTransactions');
+const containerForTransactionData = document.querySelector('.viewTransactions');
 
 // FUNCTION DECLARATION
 
-// Redirect function
+//MY REEEEAALYY COOL FUNCTION TO REDIRECT to overcome SPAGHETTI navigation
+const clearWindows = function (windowToBeLeftOpen) {
+
+    const containerDivs = [
+        containerLogin,
+        containerOptions,
+        containerAddTransaction,
+        containerAddTransOptions,
+        containerAddTransInfo,
+        containerAddTransComplete,
+        containerViewTransOutline
+    ]
+
+    containerDivs.forEach(div => {
+        if ((!div.classList.contains('hidden')) && (!div.classList.contains(windowToBeLeftOpen))) {
+            div.classList.add('hidden');
+        }
+        if (div.classList.contains(windowToBeLeftOpen)) {
+            div.classList.remove('hidden');
+        }
+    });
+
+    // Dropdown for selecting account during add trans
+    while (addTransInputAccount.firstChild) {
+        addTransInputAccount.removeChild(addTransInputAccount.firstChild);
+    }
+    // Container for viewing transactions
+    while (containerForTransactionData.firstChild) {
+        containerForTransactionData.removeChild(containerForTransactionData.firstChild);
+    }
+
+    const inputElements = [
+        addTransInputAmount,
+        addTransInputName
+    ];
+
+    inputElements.forEach(element => {
+        element.value = '';
+    });
+};
+
+// Redirect function  -- the old and trusty 
 const swapWindows = function (startingWindow, newWindow) {
     const windowToHide = document.querySelector(startingWindow);
     console.log(`Window closed: ${windowToHide.classList}`);
@@ -41,7 +77,7 @@ const swapWindows = function (startingWindow, newWindow) {
     const windowToShow = document.querySelector(newWindow);
     console.log(`Window opened: ${windowToShow.classList}`);
     windowToShow.classList.remove('hidden');
-};
+}
 
 // GET function - 1 parameter - URL endpoint (collection name)
 const getCollection = async function (collectionName) {
@@ -58,24 +94,27 @@ const getCollection = async function (collectionName) {
 }; // to use above function - must call from async function
 
 
-
-
-
 // REDIRECT BUTTONS //
-
+//Global back button redirect
+buttonBack.forEach(button => {
+    button.addEventListener('click', function () {
+        clearWindows('homeOptions');
+    });
+});
 // LOG IN button redirect
 buttonLogin.addEventListener('click', function () {
-    swapWindows('.container_login', '.homeOptions');
+    clearWindows('homeOptions');
 });
-
 // LOG OUT button redirect
-buttonLogout.addEventListener('click', async function () {
-    /* // WIP still need to pick the correct window to close */
-    swapWindows('.homeOptions', '.container_login');
+buttonLogout.addEventListener('click', function () {
+    clearWindows('container_login');
 });
-
 // ADD TRANSACTION button redirect - including moving through the whole process
-buttonAddTransaction.addEventListener('click', async function () {
+optionsAddTransBtn.addEventListener('click', async function () {
+
+    clearWindows('optionAddTransaction');
+    containerAddTransOptions.classList.remove('hidden');
+
     let budgetAccountsArray = null;
 
     try {
@@ -84,15 +123,14 @@ buttonAddTransaction.addEventListener('click', async function () {
         console.error(error);
     }
 
+    //Populating dropdown box with 'options' which are all documents in budgetAccounts collection
     budgetAccountsArray.forEach(option => {
-        const selectElement = document.getElementById('transAccount');
         const optionElement = document.createElement('option');
         optionElement.textContent = option.name;
-        selectElement.appendChild(optionElement);
+        addTransInputAccount.appendChild(optionElement);
     })
-
-    swapWindows('.homeOptions', '.optionAddTransaction');
-    document.querySelector('.addTransOptions').classList.remove('hidden');
+    //Defaulting select box to not have text
+    addTransInputAccount.selectedIndex = -1;
 
     let splitOrPersonal = '';
     buttonSplitOrPersonal.forEach(button => {
@@ -106,22 +144,16 @@ buttonAddTransaction.addEventListener('click', async function () {
     btnAddTransaction.addEventListener('click', async function () {
 
         //Getting data from input & dropdown boxes
-        const name = document.querySelector('#transName').value;
-        document.querySelector('#transName').value = '';
-        const amount = document.querySelector('#transAmount').value;
-        document.querySelector('#transAmount').value = '';
-        const account = document.querySelector('#transAccount').value;
-        const transAccountElement = document.querySelector('#transAccount');
-        while (transAccountElement.firstChild) {
-            transAccountElement.removeChild(transAccountElement.firstChild);
-        }
+        const name = addTransInputName.value;
+        const amount = addTransInputAmount.value;
+        const account = addTransInputAccount.value;
 
         //Creating object to send through API        
         const transactionData = {
             name: name,
             account: account,
             amount: Number(amount),
-            split: (splitOrPersonal === 'Split' ? true : false),
+            split: splitOrPersonal === 'Split' ? true : false,
             owner: 'Justin',
             preplannedExpense: Boolean('true')
         };
@@ -151,56 +183,38 @@ buttonAddTransaction.addEventListener('click', async function () {
 
 });
 
-buttonBackHome.addEventListener('click', function () {
-    swapWindows('.addTransComplete', '.homeOptions');
-    document.querySelector('.optionAddTransaction').classList.add('hidden');
-});
+optionsViewTransBtn.addEventListener('click', async function () {
 
-buttonViewTransactions.addEventListener('click', async function () {
+    clearWindows('optionViewTransactions');
 
     const transactions = await getCollection('transactions');
-    console.log(transactions);
-
 
     transactions.forEach(transaction => {
 
-        const viewTransactions = document.querySelector('.viewTransactions');
-        const newTransactionContainer = document.createElement('div');
-        newTransactionContainer.classList.add('transaction_container');
-        viewTransactions.appendChild(newTransactionContainer);
+        const newTransactionData = document.createElement('div');
+        newTransactionData.classList.add('transaction_container');
+        containerForTransactionData.appendChild(newTransactionData);
 
         const nameLabel = document.createElement('label');
         nameLabel.setAttribute('id', 'viewTransNameLabel');
         nameLabel.textContent = transaction.name;
-        newTransactionContainer.appendChild(nameLabel);
+        newTransactionData.appendChild(nameLabel);
 
         const amountLabel = document.createElement('label');
         amountLabel.textContent = transaction.amount;
-        newTransactionContainer.appendChild(amountLabel);
+        newTransactionData.appendChild(amountLabel);
 
         const accountLabel = document.createElement('label');
         accountLabel.textContent = transaction.account;
-        newTransactionContainer.appendChild(accountLabel);
+        newTransactionData.appendChild(accountLabel);
 
         const splitLabel = document.createElement('label');
         splitLabel.textContent = transaction.split;
-        newTransactionContainer.appendChild(splitLabel);
+        newTransactionData.appendChild(splitLabel);
 
         const preplannedExpenseLabel = document.createElement('label');
         preplannedExpenseLabel.textContent = transaction.preplannedExpense;
-        newTransactionContainer.appendChild(preplannedExpenseLabel);
+        newTransactionData.appendChild(preplannedExpenseLabel);
 
     });
-
-    swapWindows('.homeOptions', '.optionViewTransactions');
-});
-
-buttonBackHomeViewTrans.addEventListener('click', function () {
-    swapWindows('.optionViewTransactions', '.homeOptions');
-
-    const transContainer = document.querySelector('.viewTransactions');
-
-    while (transContainer.firstChild) {
-        transContainer.removeChild(transContainer.firstChild);
-    }
 });
