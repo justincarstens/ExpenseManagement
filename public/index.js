@@ -81,7 +81,6 @@ buttonAddTransaction.addEventListener('click', async function () {
 
     try {
         budgetAccountsArray = await getCollection('budgetAccounts');
-        console.log(budgetAccountsArray);
     } catch (error) {
         console.error(error);
     }
@@ -109,15 +108,22 @@ buttonAddTransaction.addEventListener('click', async function () {
 
         //Getting data from input & dropdown boxes
         const name = document.querySelector('#transName').value;
+        document.querySelector('#transName').value = '';
         const amount = document.querySelector('#transAmount').value;
+        document.querySelector('#transAmount').value = '';
         const account = document.querySelector('#transAccount').value;
+        const transAccountElement = document.querySelector('#transAccount');
+
+        while (transAccountElement.firstChild) {
+            transAccountElement.removeChild(transAccountElement.firstChild);
+        }
 
         //Creating object to send through API        
         const transactionData = {
             name: name,
             account: account,
             amount: Number(amount),
-            split: Boolean(splitOrPersonal),
+            split: (splitOrPersonal === 'Split' ? true : false),
             owner: 'Justin',
             preplannedExpense: Boolean('true')
         };
@@ -141,6 +147,7 @@ buttonAddTransaction.addEventListener('click', async function () {
             throw error;
         }
         console.log('Button pressed: Add transaction');
+
         swapWindows('.addTransInfo', '.addTransComplete');
     });
 
