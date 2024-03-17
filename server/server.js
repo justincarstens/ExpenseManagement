@@ -1,4 +1,5 @@
 // nodemon server.js to start live server <3
+// nodemon --env-file=config.env server.js
 
 import express from 'express';
 import cors from 'cors';
