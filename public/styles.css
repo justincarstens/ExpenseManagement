@@ -219,6 +219,72 @@ select {
     height: 50px;
 }
 
+.optionViewTransactions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60vw;
+    height: 70vh;
+    background-color: rgb(116, 116, 116);
+}
+
+.lblViewTransHeading {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #3a3838f6;
+    text-align: center;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.viewTransactionsHeadings {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
+
+.viewTransactions {
+    margin-bottom: 70px;
+    width: 90%;
+    max-height: calc(100% - 50px);
+    overflow-y: auto;
+}
+
+.transaction_container {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.transaction_container label {
+    padding: 10px 10px;
+    margin: 10px 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 10%;
+    text-align: center;
+}
+
+#viewTransNameLabel,
+#viewTransHeadingNameLabel {
+    width: 45%;
+}
+
+.viewTransHeadingLabel {
+    font-size: 16px;
+    width: 10%;
+    text-align: center;
+    margin: 10px;
+}
+
 .hidden {
     display: none;
 }

@@ -28,6 +28,9 @@ const btnAddTransaction = document.querySelector('.btnAddTransaction');
 const buttonSplitOrPersonal = document.querySelectorAll('.btnAddTransOptions');
 const buttonBackHome = document.querySelector('.btnBackHome');
 
+//view transaction screen
+const buttonViewTransactions = document.querySelector('#btnViewTransactionsOption');
+
 // FUNCTION DECLARATION
 
 // Redirect function
@@ -146,4 +149,43 @@ buttonAddTransaction.addEventListener('click', async function () {
 buttonBackHome.addEventListener('click', function () {
     swapWindows('.addTransComplete', '.homeOptions');
     document.querySelector('.optionAddTransaction').classList.add('hidden');
+});
+
+buttonViewTransactions.addEventListener('click', async function () {
+
+    const transactions = await getCollection('transactions');
+    console.log(transactions);
+
+
+    transactions.forEach(transaction => {
+
+        const viewTransactions = document.querySelector('.viewTransactions');
+        const newTransactionContainer = document.createElement('div');
+        newTransactionContainer.classList.add('transaction_container');
+        viewTransactions.appendChild(newTransactionContainer);
+
+        const nameLabel = document.createElement('label');
+        nameLabel.setAttribute('id', 'viewTransNameLabel');
+        nameLabel.textContent = transaction.name;
+        newTransactionContainer.appendChild(nameLabel);
+
+        const amountLabel = document.createElement('label');
+        amountLabel.textContent = transaction.amount;
+        newTransactionContainer.appendChild(amountLabel);
+
+        const accountLabel = document.createElement('label');
+        accountLabel.textContent = transaction.account;
+        newTransactionContainer.appendChild(accountLabel);
+
+        const splitLabel = document.createElement('label');
+        splitLabel.textContent = transaction.split;
+        newTransactionContainer.appendChild(splitLabel);
+
+        const preplannedExpenseLabel = document.createElement('label');
+        preplannedExpenseLabel.textContent = transaction.preplannedExpense;
+        newTransactionContainer.appendChild(preplannedExpenseLabel);
+
+    });
+
+    swapWindows('.homeOptions', '.optionViewTransactions');
 });

@@ -31,7 +31,7 @@
         <!-- //Options page, right after logging in -->
         <div class="homeOptions hidden">
             <button class="btn btnOptions" id="btnAddTransactionOption">Add a transaction</button>
-            <button class="btn btnOptions">View transactions</button>
+            <button class="btn btnOptions" id="btnViewTransactionsOption">View transactions</button>
             <button class="btn btnOptions">Budget for next month</button>
             <button class="btn btnOptions">Allocate transactions</button>
         </div>
@@ -69,6 +69,29 @@
                 <button class="btn btnBackHome">Home</button>
             </div>
 
+        </div>
+
+        <div class="optionViewTransactions hidden">
+
+            <label class="lbl lblViewTransHeading">Your Transactions</label>
+
+            <div class="viewTransactionsHeadings">
+                <label class="lbl viewTransHeadingLabel" id="viewTransHeadingNameLabel">Name</label>
+                <label class="lbl viewTransHeadingLabel">Amount</label>
+                <label class="lbl viewTransHeadingLabel">Account</label>
+                <label class="lbl viewTransHeadingLabel">Split</label>
+                <label class="lbl viewTransHeadingLabel">Preplanned</label>
+            </div>
+
+            <div class="viewTransactions">
+                <div class="transaction_container">
+                    <label id="viewTransNameLabel">Checkers / Outdoor Wharehouse</label>
+                    <label>2540</label>
+                    <label>Other Split</label>
+                    <label>true</label>
+                    <label>true</label>
+                </div>
+            </div>
         </div>
 
 
