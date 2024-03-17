@@ -32,7 +32,7 @@
         <div class="homeOptions hidden">
             <button class="btn btnOptions" id="btnAddTransactionOption">Add a transaction</button>
             <button class="btn btnOptions" id="btnViewTransactionsOption">View transactions</button>
-            <button class="btn btnOptions">Budget for next month</button>
+            <button class="btn btnOptions" id="btnViewBalances">View account balances</button>
             <button class="btn btnOptions">Allocate transactions</button>
         </div>
 
@@ -40,9 +40,7 @@
         <!-- //Add transactions block -->
         <div class="optionAddTransaction hidden">
             <h3 class="lbl lblMainHeading">ADD A TRANSACTION</h3>
-
             <div class="addTransOptions hidden">
-
                 <label>Is this transaction SPLIT or a PERSONAL expense?</label>
                 <div class="buttons">
                     <button class="btn btnAddTransOptions">Split</button>
@@ -50,9 +48,7 @@
                 </div>
                 <button class="btn btnBack">BACK</button>
             </div>
-
             <div class="addTransInfo hidden">
-
                 <label class="lbl">Name</label>
                 <input type="text" id="transName">
                 <label class="lbl">Amount</label>
@@ -61,20 +57,15 @@
                 <select id="transAccount"></select>
                 <button class="btn btnAddTransaction">Add Transaction</button>
                 <button class="btn btnBack">BACK</button>
-
             </div>
-
             <div class="addTransComplete hidden">
                 <label class="lbl">Your transaction has been logged!</label>
                 <button class="btn btnBack">Home</button>
             </div>
-
         </div>
 
         <div class="optionViewTransactions hidden">
-
             <label class="lbl lblViewTransHeading">Your Transactions</label>
-
             <div class="viewTransactionsHeadings">
                 <label class="lbl viewTransHeadingLabel" id="viewTransHeadingNameLabel">Name</label>
                 <label class="lbl viewTransHeadingLabel">Amount</label>
@@ -82,13 +73,23 @@
                 <label class="lbl viewTransHeadingLabel">Split</label>
                 <label class="lbl viewTransHeadingLabel">Preplanned</label>
             </div>
-
             <div class="viewTransactions">
-
             </div>
-
             <div class="viewTransFooter"><button class="btn btnBack">BACK</button></div>
         </div>
+
+        <div class="optionViewBalances hidden">
+            <label class="lbl lblViewTransHeading">Your Transactions</label>
+            <div class="viewBalancesHeadings">
+                <label class="lbl viewBalancesHeadingLabel">Name</label>
+                <label class="lbl viewBalancesHeadingLabel">Amount</label>
+            </div>
+            <div class="viewBalances">
+            </div>
+            <div class="viewBalancesFooter"><button class="btn btnBack">BACK</button></div>
+        </div>
+
+    </div>
 
 
     </div>

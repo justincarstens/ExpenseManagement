@@ -9,6 +9,8 @@ const buttonLogout = document.querySelector('.btnLogout');
 const containerOptions = document.querySelector('.homeOptions');
 const optionsAddTransBtn = document.querySelector('#btnAddTransactionOption');
 const optionsViewTransBtn = document.querySelector('#btnViewTransactionsOption');
+const optionsViewBalancesBtn = document.querySelector('#btnViewBalances');
+
 //Globalish
 const buttonBack = document.querySelectorAll('.btnBack');
 //add transaction screen
@@ -24,6 +26,9 @@ const containerAddTransComplete = document.querySelector('.addTransComplete');
 //view transaction screen
 const containerViewTransOutline = document.querySelector('.optionViewTransactions');
 const containerForTransactionData = document.querySelector('.viewTransactions');
+//view account balances screen
+const containerViewBalances = document.querySelector('.optionViewBalances');
+const containerForAccountData = document.querySelector('.viewBalances');
 
 // FUNCTION DECLARATION
 
@@ -37,7 +42,8 @@ const clearWindows = function (windowToBeLeftOpen) {
         containerAddTransOptions,
         containerAddTransInfo,
         containerAddTransComplete,
-        containerViewTransOutline
+        containerViewTransOutline,
+        containerViewBalances
     ]
 
     containerDivs.forEach(div => {
@@ -56,6 +62,10 @@ const clearWindows = function (windowToBeLeftOpen) {
     // Container for viewing transactions
     while (containerForTransactionData.firstChild) {
         containerForTransactionData.removeChild(containerForTransactionData.firstChild);
+    }
+    //Container for viewing budget accounts
+    while (containerForAccountData.firstChild) {
+        containerForAccountData.removeChild(containerForAccountData.firstChild);
     }
 
     const inputElements = [
@@ -191,30 +201,55 @@ optionsViewTransBtn.addEventListener('click', async function () {
 
     transactions.forEach(transaction => {
 
-        const newTransactionData = document.createElement('div');
-        newTransactionData.classList.add('transaction_container');
-        containerForTransactionData.appendChild(newTransactionData);
+        const newAccountData = document.createElement('div');
+        newAccountData.classList.add('transaction_container');
+        containerForTransactionData.appendChild(newAccountData);
 
         const nameLabel = document.createElement('label');
         nameLabel.setAttribute('id', 'viewTransNameLabel');
         nameLabel.textContent = transaction.name;
-        newTransactionData.appendChild(nameLabel);
+        newAccountData.appendChild(nameLabel);
 
         const amountLabel = document.createElement('label');
         amountLabel.textContent = transaction.amount;
-        newTransactionData.appendChild(amountLabel);
+        newAccountData.appendChild(amountLabel);
 
         const accountLabel = document.createElement('label');
         accountLabel.textContent = transaction.account;
-        newTransactionData.appendChild(accountLabel);
+        newAccountData.appendChild(accountLabel);
 
         const splitLabel = document.createElement('label');
         splitLabel.textContent = transaction.split;
-        newTransactionData.appendChild(splitLabel);
+        newAccountData.appendChild(splitLabel);
 
         const preplannedExpenseLabel = document.createElement('label');
         preplannedExpenseLabel.textContent = transaction.preplannedExpense;
-        newTransactionData.appendChild(preplannedExpenseLabel);
+        newAccountData.appendChild(preplannedExpenseLabel);
+
+    });
+});
+
+optionsViewBalancesBtn.addEventListener('click', async function () {
+
+    clearWindows('optionViewBalances');
+
+    const budgetAccounts = await getCollection('budgetAccounts');
+
+    budgetAccounts.forEach(account => {
+
+        const newAccountData = document.createElement('div');
+        newAccountData.classList.add('budgetAccounts_container');
+        containerForAccountData.appendChild(newAccountData);
+
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = account.name;
+        nameLabel.classList.add('buttonForBudgetLabels');
+        newAccountData.appendChild(nameLabel);
+
+        const amountLabel = document.createElement('label');
+        amountLabel.textContent = account.amount;
+        amountLabel.classList.add('buttonForBudgetLabels');
+        newAccountData.appendChild(amountLabel);
 
     });
 });

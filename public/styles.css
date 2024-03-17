@@ -219,7 +219,8 @@ select {
     height: 50px;
 }
 
-.optionViewTransactions {
+.optionViewTransactions,
+.optionViewBalances {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -247,21 +248,30 @@ select {
     flex-direction: row;
     padding: 10px 10px;
     margin: 10px 10px;
+    background-color: antiquewhite;
+
 }
 
-.viewTransactions {
+.viewTransactions,
+.viewBalances {
     margin-bottom: 70px;
     width: 90%;
     max-height: calc(100% - 50px);
     overflow-y: auto;
 }
 
-.transaction_container {
+.transaction_container,
+.budgetAccounts_container {
     width: 100%;
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+
+}
+
+.budgetAccounts_container {
+    justify-content: center;
 }
 
 .transaction_container label {
@@ -274,26 +284,41 @@ select {
     text-align: center;
 }
 
-#viewTransNameLabel,
-#viewTransHeadingNameLabel {
-    width: 45%;
+.budgetAccounts_container label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 10px 10px;
+    margin: 10px 10px;
+    text-align: center;
+    width: 10%;
 }
 
-.viewTransHeadingLabel {
+#viewTransNameLabel,
+#viewTransHeadingNameLabel {
+    width: 40%;
+}
+
+.viewTransHeadingLabel,
+.viewBalancesHeadingLabel {
     font-size: 16px;
     width: 10%;
     text-align: center;
-    margin: 10px;
+    margin: 8px;
 }
 
-.viewTransFooter {
+.viewTransFooter,
+.viewBalancesFooter {
     position: absolute;
     width: 100%;
     bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.buttonForBudgetLabels {
+    width: auto;
 }
 
 .hidden {
